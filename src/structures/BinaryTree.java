@@ -10,8 +10,14 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
         this.depth = 0;
     }
 
+    /*
+     *
+     * Operaciones
+     *
+     */
+
     public void add(AnyType x) {
-        if(isEmpty()) raiz = new Node<>(x);
+        if (isEmpty()) raiz = new Node<>(x);
         else if (x.compareTo(raiz.getElement()) < 0) {
             if (raiz.getLeft() == null) {
                 raiz.setLeft(new Node<>(x));
@@ -96,8 +102,10 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
                 } else raiz.setLeft(aux);
             }
 
-        } else if (x.compareTo(raiz.getElement()) < 0  && raiz.getLeft() != null) raiz.setLeft(delete(x, raiz.getLeft()));
-        else if (x.compareTo(raiz.getElement()) > 0 && raiz.getRight() != null) raiz.setRight(delete(x, raiz.getRight()));
+        } else if (x.compareTo(raiz.getElement()) < 0 && raiz.getLeft() != null)
+            raiz.setLeft(delete(x, raiz.getLeft()));
+        else if (x.compareTo(raiz.getElement()) > 0 && raiz.getRight() != null)
+            raiz.setRight(delete(x, raiz.getRight()));
         else throw new Exception("El elemento no esta en el arbol");
     }
 
@@ -117,31 +125,12 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
                     aux2.setLeft(aux);
                 } else node.setLeft(aux);
             }
-        } else if (x.compareTo(raiz.getElement()) < 0 && node.getLeft() != null) node.setLeft(delete(x, node.getLeft()));
-        else if (x.compareTo(raiz.getElement()) > 0 && node.getRight() != null) node.setRight(delete(x, node.getRight()));
+        } else if (x.compareTo(raiz.getElement()) < 0 && node.getLeft() != null)
+            node.setLeft(delete(x, node.getLeft()));
+        else if (x.compareTo(raiz.getElement()) > 0 && node.getRight() != null)
+            node.setRight(delete(x, node.getRight()));
         else throw new Exception("El elemento no esta en el arbol");
         return node;
-    }
-
-    public void printAsTree() {
-        System.out.println(raiz.getElement());
-        if (raiz.getLeft() != null) printAsTree(raiz.getLeft(), 1);
-        else System.out.print(" ├─");
-        if (raiz.getRight() != null) printAsTree(raiz.getRight(), 1);
-        else System.out.print(" ├─");
-    }
-
-    private void printAsTree(Node<AnyType> node, int i) {
-        for (int j = 0; j < i; j++) {
-            if (i == 1) System.out.print("├─");
-            else if (j < i - 1) System.out.print("│  ");
-            else System.out.print("├─ ");
-        }
-        if (node != null) {
-            System.out.println(node.getElement());
-            printAsTree(node.getLeft(), i + 1);
-            printAsTree(node.getRight(), i + 1);
-        } else System.out.println();
     }
 
     public Integer depth() {
@@ -181,41 +170,25 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
         else throw new Exception("El elemento no esta en el arbol");
     }
 
-    public void printfTree() {
-        System.out.println("Arbol de menor a mayor:");
-        if (raiz.getLeft() != null) {
-            printfTree(raiz.getLeft());
-        }
+    /*
+     *
+     * Estados
+     *
+     */
 
-        System.out.print(raiz.getElement() + "\t");
-
-        if (raiz.getRight() != null) {
-            printfTree(raiz.getRight());
-        }
-
-        System.out.println();
-    }
-
-    private void printfTree(Node<AnyType> node) {
-        if (node.getLeft() != null) {
-            printfTree(node.getLeft());
-        }
-
-        System.out.print(node.getElement() + "\t");
-
-        ///////////////////////////////////
-        if (node.getRight() != null) {
-            printfTree(node.getRight());
-        }
-    }
-
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return raiz == null;
     }
 
-    public void makeEmpty(){
+    public void makeEmpty() {
         raiz = null;
     }
+
+    /*
+     *
+     * Setters & Getters
+     *
+     */
 
     public Node<AnyType> getRaiz() {
         return raiz;
@@ -225,22 +198,37 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
         this.raiz = raiz;
     }
 
-    public void traversePreOrder(StringBuilder sb, String padding, String pointer, Node<AnyType> node) {
-        if (node != null) {
-            sb.append(padding);
-            sb.append(pointer);
-            sb.append(node.getElement());
-            sb.append("\n");
+    /*
+     *
+     * Para imprimir (prints)
+     *
+     */
 
-            StringBuilder paddingBuilder = new StringBuilder(padding);
-            paddingBuilder.append("│  ");
+    public void printInOrder() {
+        System.out.println("Arbol de menor a mayor:");
+        if (raiz.getLeft() != null) {
+            printInOrder(raiz.getLeft());
+        }
 
-            String paddingForBoth = paddingBuilder.toString();
-            String pointerForRight = "└──";
-            String pointerForLeft = (node.getRight() != null) ? "├──" : "└──";
+        System.out.print(raiz.getElement() + "\t");
 
-            traversePreOrder(sb, paddingForBoth, pointerForLeft, node.getLeft());
-            traversePreOrder(sb, paddingForBoth, pointerForRight, node.getRight());
+        if (raiz.getRight() != null) {
+            printInOrder(raiz.getRight());
+        }
+
+        System.out.println();
+    }
+
+    private void printInOrder(Node<AnyType> node) {
+        if (node.getLeft() != null) {
+            printInOrder(node.getLeft());
+        }
+
+        System.out.print(node.getElement() + "\t");
+
+        ///////////////////////////////////
+        if (node.getRight() != null) {
+            printInOrder(node.getRight());
         }
     }
 
@@ -266,8 +254,7 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
         return sb.toString();
     }
 
-    public void traverseNodes(StringBuilder sb, String padding, String pointer, Node<AnyType> node,
-                              boolean hasRightSibling) {
+    public void traverseNodes(StringBuilder sb, String padding, String pointer, Node<AnyType> node, boolean hasRightSibling) {
         if (node != null) {
             sb.append("\n");
             sb.append(padding);
@@ -289,6 +276,4 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
             traverseNodes(sb, paddingForBoth, pointerRight, node.getRight(), false);
         }
     }
-
-
 }

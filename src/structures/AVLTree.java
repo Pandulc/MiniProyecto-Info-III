@@ -1,11 +1,13 @@
 package structures;
 
+import java.io.PrintStream;
+
 public class AVLTree<AnyType extends Comparable<AnyType>> {
     private Node<AnyType> raiz;
 
     /*
      *
-     * Agregar y borrar
+     * Operaciones
      *
      */
 
@@ -56,53 +58,6 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
         return applyRotation(node);
     }
 
-    /*
-     *
-     * Para imprimir (prints)
-     *
-     */
-
-    public void print() {
-        printInOrder(raiz);
-    }
-
-    private void printInOrder(Node<AnyType> node) {
-        if (node != null) {
-            printInOrder(node.getLeft());
-            System.out.print(node.getElement() + "\t");
-            printInOrder(node.getRight());
-        }
-
-        System.out.println();
-    }
-
-    public void printAsTree() {
-        System.out.println(raiz.getElement());
-        if (raiz.getLeft() != null) printAsTree(raiz.getLeft(), 1);
-        else System.out.print(" ├─");
-        if (raiz.getRight() != null) printAsTree(raiz.getRight(), 1);
-        else System.out.print(" ├─");
-    }
-
-    private void printAsTree(Node<AnyType> node, int i) {
-        for (int j = 0; j < i; j++) {
-            if (i == 1) System.out.print("├─");
-            else if (j < i - 1) System.out.print("│  ");
-            else System.out.print("├─ ");
-        }
-        if (node != null) {
-            System.out.println(node.getElement());
-            printAsTree(node.getLeft(), i + 1);
-            printAsTree(node.getRight(), i + 1);
-        } else System.out.println();
-    }
-
-    /*
-     *
-     * Get min y max
-     *
-     */
-
     public AnyType getMax() {
         if (isEmpty()) {
             return null;
@@ -131,8 +86,17 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
         return node.getElement();
     }
 
+    /*
+     *
+     * Estados
+     *
+     */
     public boolean isEmpty() {
         return raiz == null;
+    }
+
+    public void makeEmpty() {
+        raiz = null;
     }
 
     /*
@@ -198,5 +162,80 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
 
     private int height(Node<AnyType> node) {
         return node != null ? node.getHeight() : 0;
+    }
+
+    /*
+     *
+     * Para imprimir (prints)
+     *
+     */
+
+    public void printInOrder() {
+        System.out.println("Arbol de menor a mayor:");
+        if (raiz.getLeft() != null) {
+            printInOrder(raiz.getLeft());
+        }
+
+        System.out.print(raiz.getElement() + "\t");
+
+        if (raiz.getRight() != null) {
+            printInOrder(raiz.getRight());
+        }
+
+        System.out.println();
+    }
+
+    private void printInOrder(Node<AnyType> node) {
+        if (node != null) {
+            printInOrder(node.getLeft());
+            System.out.print(node.getElement() + "\t");
+            printInOrder(node.getRight());
+        }
+    }
+
+    public void printLikeTree(PrintStream os) {
+        os.print(traversePreOrder(raiz));
+    }
+
+    public String traversePreOrder(Node<AnyType> raiz) {
+
+        if (raiz == null) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(raiz.getElement());
+
+        String pointerRight = "└──";
+        String pointerLeft = (raiz.getRight() != null) ? "├──" : "└──";
+
+        traverseNodes(sb, "", pointerLeft, raiz.getLeft(), raiz.getRight() != null);
+        traverseNodes(sb, "", pointerRight, raiz.getRight(), false);
+
+        return sb.toString();
+    }
+
+    public void traverseNodes(StringBuilder sb, String padding, String pointer, Node<AnyType> node,
+                              boolean hasRightSibling) {
+        if (node != null) {
+            sb.append("\n");
+            sb.append(padding);
+            sb.append(pointer);
+            sb.append(node.getElement());
+
+            StringBuilder paddingBuilder = new StringBuilder(padding);
+            if (hasRightSibling) {
+                paddingBuilder.append("│  ");
+            } else {
+                paddingBuilder.append("   ");
+            }
+
+            String paddingForBoth = paddingBuilder.toString();
+            String pointerRight = "└──";
+            String pointerLeft = (node.getRight() != null) ? "├──" : "└──";
+
+            traverseNodes(sb, paddingForBoth, pointerLeft, node.getLeft(), node.getRight() != null);
+            traverseNodes(sb, paddingForBoth, pointerRight, node.getRight(), false);
+        }
     }
 }
