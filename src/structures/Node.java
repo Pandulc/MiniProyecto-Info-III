@@ -1,6 +1,6 @@
 package structures;
 
-public class Node<AnyType extends Comparable <AnyType>>{
+public class Node<AnyType extends Comparable<AnyType>> {
     private AnyType element;
     private Node<AnyType> left;
     private Node<AnyType> right;
