@@ -28,23 +28,18 @@ public class Operations {
     }
 
     public static BinaryTree<Integer> manualBinary() {
-        int cant;
         int num;
         BinaryTree<Integer> binTree = new BinaryTree<>();
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Arbol binario manual");
-        System.out.println("Ingrese la cantidad de elementos del arbol binario");
-        System.out.print("\nCantidad: ");
-        cant = sc.nextInt();
+        System.out.println("Ingrese el dato a ingresar. Ingrese un valor negativo para salir");
 
-        System.out.println("Ingrese los valores");
-
-        for (int i = 0; i < cant; i++) {
-            System.out.println("Valor: ");
+        do {
+            System.out.print("\nDato: ");
             num = sc.nextInt();
-            binTree.add(num);
-        }
+            if(num >= 0) binTree.add(num);
+        } while (num >= 0);
 
         System.out.println("Arbol binario manual creado satisfactoriamente");
         return binTree;
@@ -71,22 +66,18 @@ public class Operations {
     }
 
     public static AVLTree<Integer> manualAVL() {
-        int cant, element;
+        int num;
         AVLTree<Integer> avlTree = new AVLTree<>();
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Arbol AVL manual");
-        System.out.println("Ingrese la cantidad de elementos del arbol AVL");
-        System.out.print("\nCantidad: ");
-        cant = sc.nextInt();
+        System.out.println("Arbol binario manual");
+        System.out.println("Ingrese el dato a ingresar. Ingrese un valor negativo para salir");
 
-        System.out.println("Ingrese los valores a insertar");
-
-        for (int i = 0; i < cant; i++) {
-            System.out.print("\nValor: ");
-            element = sc.nextInt();
-            avlTree.add(element);
-        }
+        do {
+            System.out.print("\nDato: ");
+            num = sc.nextInt();
+            if(num >= 0) avlTree.add(num);
+        } while (num > 0);
 
         System.out.println("Arbol AVL manual creado satisfactoriamente");
         return avlTree;
