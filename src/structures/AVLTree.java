@@ -172,6 +172,7 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
 
     public void printInOrder() {
         System.out.println("Arbol de menor a mayor:");
+
         if (raiz.getLeft() != null) {
             printInOrder(raiz.getLeft());
         }

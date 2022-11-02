@@ -18,6 +18,12 @@ public class Node<AnyType extends Comparable<AnyType>> {
         this.right = null;
     }
 
+    /*
+     *
+     * Setters & Getters
+     *
+     */
+
     public AnyType getElement() {
         return element;
     }

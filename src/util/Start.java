@@ -9,10 +9,9 @@ public class Start {
     private static BinaryTree<Integer> bTree;
     private static AVLTree<Integer> avlTree;
 
-    public static void menu() {
+    public static void menu() throws Exception {
 
         int option;
-        Scanner sc = new Scanner(System.in);
 
         do {
 
@@ -34,8 +33,8 @@ public class Start {
     private static int switchOp() {
         int op;
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("\nIngrese la opcion a realizar\n");
+        System.out.print("\n---------------------------------");
+        System.out.println("\nIngrese la opcion a realizar");
 
         System.out.println("1. Crear arbol aleatorio");
         System.out.println("2. Crear arbol manual");
@@ -44,8 +43,9 @@ public class Start {
         System.out.println("5. Mostrar arbol ordenado");
         System.out.println("6. Mostrar dibujo del arbol\n");
         System.out.println("0. Salir");
+        System.out.println("---------------------------------");
 
-        System.out.print("\nOpcion: ");
+        System.out.print("Opcion: ");
 
         op = sc.nextInt();
         return op;

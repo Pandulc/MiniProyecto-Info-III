@@ -1,9 +1,12 @@
-
 import util.Start;
-
 
 public class Main {
     public static void main(String[] args) {
-        Start.menu();
+
+        try {
+            Start.menu();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

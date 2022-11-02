@@ -8,13 +8,13 @@ import java.util.Scanner;
 
 public class Operations {
 
-    public static BinaryTree<Integer> randomBinary() {
+    public static BinaryTree<Integer> randomBinary() throws Exception {
         int cant;
         BinaryTree<Integer> binTree = new BinaryTree<>();
         Scanner sc = new Scanner(System.in);
         Random ran = new Random();
 
-        System.out.println("Arbol binario aleatorio");
+        System.out.println("\nArbol binario aleatorio");
         System.out.println("Ingrese la cantidad de elementos del arbol binario");
         System.out.print("\nCantidad: ");
         cant = sc.nextInt();
@@ -23,36 +23,38 @@ public class Operations {
             binTree.add(ran.nextInt(100));
         }
 
-        System.out.println("Arbol binario aleatorio creado satisfactoriamente");
+        if (!binTree.isEmpty()) System.out.println("Arbol binario aleatorio creado satisfactoriamente");
+        else throw new Exception("No pudo crearse el arbol binario o se creo vacio");
         return binTree;
     }
 
-    public static BinaryTree<Integer> manualBinary() {
+    public static BinaryTree<Integer> manualBinary() throws Exception {
         int num;
         BinaryTree<Integer> binTree = new BinaryTree<>();
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Arbol binario manual");
+        System.out.println("\nArbol binario manual");
         System.out.println("Ingrese el dato a ingresar. Ingrese un valor negativo para salir");
 
         do {
             System.out.print("\nDato: ");
             num = sc.nextInt();
-            if(num >= 0) binTree.add(num);
+            if (num >= 0) binTree.add(num);
         } while (num >= 0);
 
-        System.out.println("Arbol binario manual creado satisfactoriamente");
+        if (!binTree.isEmpty()) System.out.println("Arbol binario manual creado satisfactoriamente");
+        else throw new Exception("No pudo crearse el arbol binario o se creo vacio");
         return binTree;
 
     }
 
-    public static AVLTree<Integer> randomAVL() {
+    public static AVLTree<Integer> randomAVL() throws Exception {
         int cant;
         AVLTree<Integer> avlTree = new AVLTree<>();
         Scanner sc = new Scanner(System.in);
         Random ran = new Random();
 
-        System.out.println("Arbol AVL aleatorio");
+        System.out.println("\nArbol AVL aleatorio");
         System.out.println("Ingrese la cantidad de elementos del arbol AVL");
         System.out.print("\nCantidad: ");
         cant = sc.nextInt();
@@ -61,29 +63,31 @@ public class Operations {
             avlTree.add(ran.nextInt(100));
         }
 
-        System.out.println("Arbol AVL aleatorio creado satisfactoriamente");
+        if (!avlTree.isEmpty()) System.out.println("Arbol binario AVL aleatorio creado satisfactoriamente");
+        else throw new Exception("No pudo crearse el arbol binario AVL o se creo vacio");
         return avlTree;
     }
 
-    public static AVLTree<Integer> manualAVL() {
+    public static AVLTree<Integer> manualAVL() throws Exception {
         int num;
         AVLTree<Integer> avlTree = new AVLTree<>();
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Arbol binario manual");
+        System.out.println("\nArbol AVL manual");
         System.out.println("Ingrese el dato a ingresar. Ingrese un valor negativo para salir");
 
         do {
             System.out.print("\nDato: ");
             num = sc.nextInt();
-            if(num >= 0) avlTree.add(num);
+            if (num >= 0) avlTree.add(num);
         } while (num > 0);
 
-        System.out.println("Arbol AVL manual creado satisfactoriamente");
+        if (!avlTree.isEmpty()) System.out.println("Arbol binario AVL manual creado satisfactoriamente");
+        else throw new Exception("No pudo crearse el arbol binario AVL o se creo vacio");
         return avlTree;
     }
 
-    public static void orderTree(BinaryTree<Integer> binTree, AVLTree<Integer> avlTree) {
+    public static void orderTree(BinaryTree<Integer> binTree, AVLTree<Integer> avlTree) throws Exception {
         int op2;
         Scanner sc = new Scanner(System.in);
 
@@ -92,21 +96,19 @@ public class Operations {
         op2 = sc.nextInt();
 
         if (op2 == 1) {
-            if (binTree.isEmpty()) {
-                System.out.println("\nEl arbol esta vacio");
-                return;
+            if (binTree == null) {
+                throw new Exception("\nEl arbol es nulo");
             }
             binTree.printInOrder();
         } else if (op2 == 2) {
-            if (avlTree.isEmpty()) {
-                System.out.println("\nEl arbol esta vacio");
-                return;
+            if (avlTree == null) {
+                throw new Exception("\nEl arbol es nulo");
             }
             avlTree.printInOrder();
         } else System.out.println("Opcion invalida");
     }
 
-    public static void drawTree(BinaryTree<Integer> binTree, AVLTree<Integer> avlTree) {
+    public static void drawTree(BinaryTree<Integer> binTree, AVLTree<Integer> avlTree) throws Exception {
         int op2;
         Scanner sc = new Scanner(System.in);
 
@@ -115,20 +117,16 @@ public class Operations {
         op2 = sc.nextInt();
 
         if (op2 == 1) {
-            if (binTree.isEmpty()) {
-                System.out.println("\nEl arbol esta vacio");
-                return;
+            if (binTree == null) {
+                throw new Exception("\nEl arbol es nulo");
             }
 
             binTree.printLikeTree(new PrintStream(System.out));
         } else if (op2 == 2) {
-            if (avlTree.isEmpty()) {
-                System.out.println("\nEl arbol esta vacio");
-                return;
+            if (avlTree == null) {
+                throw new Exception("\nEl arbol es nulo");
             }
-
             avlTree.printLikeTree(new PrintStream(System.out));
-
         }
     }
 }
