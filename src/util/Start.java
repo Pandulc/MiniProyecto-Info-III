@@ -1,53 +1,80 @@
 package util;
 
-import structures.*;
-
 import java.util.Scanner;
 
 public class Start {
+    private static int op;
+    private static final Scanner sc = new Scanner(System.in);
 
-    private static BinaryTree<Integer> bTree;
-    private static AVLTree<Integer> avlTree;
+    public static void menu() {
+        int tree;
 
-    public static void menu() throws Exception {
-
-        int option;
-
-        do {
-
-            option = switchOp();
-            switch (option) {
-                case 0 -> System.out.println("Cierre del programa");
-                case 1 -> bTree = Operations.randomBinary();
-                case 2 -> bTree = Operations.manualBinary();
-                case 3 -> avlTree = Operations.randomAVL();
-                case 4 -> avlTree = Operations.manualAVL();
-                case 5 -> Operations.orderTree(bTree, avlTree);
-                case 6 -> Operations.drawTree(bTree, avlTree);
-                default -> System.out.println("Se ha ingresado una opcion invalida. Intentelo nuevamente");
-            }
-        } while (option != 0);
-
+        tree = switchTree();
+        switchMode(tree);
     }
 
-    private static int switchOp() {
-        int op;
-        Scanner sc = new Scanner(System.in);
-        System.out.print("\n---------------------------------");
-        System.out.println("\nIngrese la opcion a realizar");
-
-        System.out.println("1. Crear arbol aleatorio");
-        System.out.println("2. Crear arbol manual");
-        System.out.println("3. Crear arbol AVL aleatorio");
-        System.out.println("4. Crear arbol AVL manual");
-        System.out.println("5. Mostrar arbol ordenado");
-        System.out.println("6. Mostrar dibujo del arbol\n");
-        System.out.println("0. Salir");
-        System.out.println("---------------------------------");
-
-        System.out.print("Opcion: ");
-
+    private static int switchTree() {
+        System.out.println("Ingrese el tipo de estructura con la cual desea trabajar:\n\t0- Salir del programa\n\t1- Arbol Binario de Busqueda\n\t2- Arbol AVL\n\t3- Monticulo Binario");
+        System.out.print("\n\tOpcion: ");
         op = sc.nextInt();
+
+        if(op == 0){
+            System.out.println("Cierre del programa");
+            System.exit(0);
+        }
+
+        if (op < 0 || op > 3) {
+            System.out.println("La opcion ingresada es invalida");
+            switchTree();
+        }
+
+
         return op;
     }
+
+    public static void switchMode(int tree) {
+        System.out.println("Ingrese la forma de carga de valores al arbol:\n\t0- Salir del programa\n\t1- Manual\n\t2- Aleatoria\n\t3- Volver al menu anterior");
+        System.out.print("\n\tOpcion: ");
+        int mode = sc.nextInt();
+
+        switch (mode) {
+            case 0 -> {
+                System.out.println("Cierre del programa");
+                System.exit(0);
+            }
+            case 1 -> Operations.manual(tree);
+            case 2 -> Operations.random(tree);
+            case 3 -> menu();
+            default -> {
+                System.out.println("La opcion ingresada no es valida.");
+                switchMode(tree);
+            }
+        }
+        switchOperation(tree);
+    }
+
+    public static void switchOperation(int tree) {
+        System.out.println("Seleccione la operacion a realizar:\n\t0- Salir del programa\n\t1- Agregar dato\n\t2- Buscar dato\n\t3- Borrar dato\n\t4- Imprimir arbol en orden\n\t5- Dibujar forma de arbol (solo ABB y AVL)\n\t6- Volver al menu anterior");
+        System.out.print("\n\tOpcion: ");
+        op = sc.nextInt();
+
+        switch (op) {
+            case 0 -> {
+                System.out.println("Cierre del programa");
+                System.exit(0);
+            }
+            case 1 -> Operations.add(tree);
+            case 2 -> Operations.search(tree);
+            case 3 -> Operations.delete(tree);
+            case 4 -> Operations.print(tree);
+            case 5 -> Operations.draw(tree);
+            case 6 -> switchMode(tree);
+            default -> {
+                System.out.println("\nOpcion invalida. Volviendo al menu...");
+                switchOperation(tree);
+            }
+        }
+    }
 }
+
+

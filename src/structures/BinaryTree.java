@@ -165,8 +165,8 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
 
     private AnyType search(AnyType x, Node<AnyType> node) throws Exception {
         if (x.equals(node.getElement())) return node.getElement();
-        else if (x.compareTo(raiz.getElement()) < 0 && node.getLeft() != null) return search(x, node.getLeft());
-        else if (x.compareTo(raiz.getElement()) > 0 && node.getRight() != null) return search(x, node.getRight());
+        else if (x.compareTo(node.getElement()) < 0 && node.getLeft() != null) return search(x, node.getLeft());
+        else if (x.compareTo(node.getElement()) > 0 && node.getRight() != null) return search(x, node.getRight());
         else throw new Exception("El elemento no esta en el arbol");
     }
 
@@ -205,7 +205,6 @@ public class BinaryTree<AnyType extends Comparable<AnyType>> {
      */
 
     public void printInOrder() {
-        System.out.println("Arbol de menor a mayor:");
         if (raiz.getLeft() != null) {
             printInOrder(raiz.getLeft());
         }

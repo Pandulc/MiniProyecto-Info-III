@@ -8,125 +8,221 @@ import java.util.Scanner;
 
 public class Operations {
 
-    public static BinaryTree<Integer> randomBinary() throws Exception {
+    private static BinaryTree<Integer> binTree;
+    private static AVLTree<Integer> avlTree;
+    private static Heap<Integer> heap;
+    private static final Scanner sc = new Scanner(System.in);
+
+    public static void random(int type) {
         int cant;
-        BinaryTree<Integer> binTree = new BinaryTree<>();
-        Scanner sc = new Scanner(System.in);
         Random ran = new Random();
 
-        System.out.println("\nArbol binario aleatorio");
-        System.out.println("Ingrese la cantidad de elementos del arbol binario");
+        System.out.println("Ingrese la cantidad de elementos del arbol");
         System.out.print("\nCantidad: ");
         cant = sc.nextInt();
 
-        for (int i = 0; i < cant; i++) {
-            binTree.add(ran.nextInt(100));
+        if (cant <= 0) {
+            System.out.println("\nNo se recomienda crear arboles vacios. Volviendo al menu...");
+            Start.switchMode(type);
         }
 
-        if (!binTree.isEmpty()) System.out.println("Arbol binario aleatorio creado satisfactoriamente");
-        else throw new Exception("No pudo crearse el arbol binario o se creo vacio");
-        return binTree;
+        switch (type) {
+            case 1 -> {
+                BinaryTree<Integer> auxBin = new BinaryTree<>();
+                System.out.println("\nArbol binario aleatorio");
+                for (int i = 0; i < cant; i++) {
+                    auxBin.add(ran.nextInt(100));
+                }
+                binTree = auxBin;
+            }
+            case 2 -> {
+                AVLTree<Integer> auxAvl = new AVLTree<>();
+                System.out.println("\nArbol AVL aleatorio");
+                for (int i = 0; i < cant; i++) {
+                    auxAvl.add(ran.nextInt(100));
+                }
+                avlTree = auxAvl;
+            }
+            case 3 -> {
+                Heap<Integer> auxHeap = new Heap<>();
+                System.out.println("\nMonticulo binario aleatorio");
+                for (int i = 0; i < cant; i++) {
+                    auxHeap.add(ran.nextInt(100));
+                }
+                heap = auxHeap;
+            }
+            default -> {
+                System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                Start.menu();
+            }
+        }
     }
 
-    public static BinaryTree<Integer> manualBinary() throws Exception {
+    public static void manual(int type) {
         int num;
-        BinaryTree<Integer> binTree = new BinaryTree<>();
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("\nArbol binario manual");
-        System.out.println("Ingrese el dato a ingresar. Ingrese un valor negativo para salir");
-
-        do {
-            System.out.print("\nDato: ");
-            num = sc.nextInt();
-            if (num >= 0) binTree.add(num);
-        } while (num >= 0);
-
-        if (!binTree.isEmpty()) System.out.println("Arbol binario manual creado satisfactoriamente");
-        else throw new Exception("No pudo crearse el arbol binario o se creo vacio");
-        return binTree;
-
-    }
-
-    public static AVLTree<Integer> randomAVL() throws Exception {
-        int cant;
-        AVLTree<Integer> avlTree = new AVLTree<>();
-        Scanner sc = new Scanner(System.in);
-        Random ran = new Random();
-
-        System.out.println("\nArbol AVL aleatorio");
-        System.out.println("Ingrese la cantidad de elementos del arbol AVL");
-        System.out.print("\nCantidad: ");
-        cant = sc.nextInt();
-
-        for (int i = 0; i < cant; i++) {
-            avlTree.add(ran.nextInt(100));
+        switch (type) {
+            case 1 -> {
+                BinaryTree<Integer> auxBin = new BinaryTree<>();
+                System.out.println("\nArbol binario manual");
+                System.out.println("Ingrese el dato. Ingrese un valor negativo para salir");
+                do {
+                    System.out.print("\nDato: ");
+                    num = sc.nextInt();
+                    if (num >= 0) auxBin.add(num);
+                } while (num > 0);
+                if (auxBin.isEmpty()) {
+                    System.out.println("\nNo se recomienda crear arboles vacios. Volviendo al menu...");
+                    Start.switchMode(type);
+                }
+                binTree = auxBin;
+            }
+            case 2 -> {
+                AVLTree<Integer> auxAvl = new AVLTree<>();
+                System.out.println("\nArbol AVL manual");
+                System.out.println("Ingrese el dato. Ingrese un valor negativo para salir");
+                do {
+                    System.out.print("\nDato: ");
+                    num = sc.nextInt();
+                    if (num >= 0) auxAvl.add(num);
+                } while (num > 0);
+                if (auxAvl.isEmpty()) {
+                    System.out.println("\nNo se recomienda crear arboles vacios. Volviendo al menu...");
+                    Start.switchMode(type);
+                }
+                avlTree = auxAvl;
+            }
+            case 3 -> {
+                Heap<Integer> auxHeap = new Heap<>();
+                System.out.println("\nMonticulo binario manual");
+                System.out.println("Ingrese el dato. Ingrese un valor negativo para salir");
+                do {
+                    System.out.print("\nDato: ");
+                    num = sc.nextInt();
+                    if (num >= 0) auxHeap.add(num);
+                } while (num > 0);
+                if (auxHeap.isEmpty()) {
+                    System.out.println("\nNo se recomienda crear arboles vacios. Volviendo al menu...");
+                    Start.switchMode(type);
+                }
+                heap = auxHeap;
+            }
+            default -> {
+                System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                Start.menu();
+            }
         }
-
-        if (!avlTree.isEmpty()) System.out.println("Arbol binario AVL aleatorio creado satisfactoriamente");
-        else throw new Exception("No pudo crearse el arbol binario AVL o se creo vacio");
-        return avlTree;
     }
 
-    public static AVLTree<Integer> manualAVL() throws Exception {
+    public static void add(int type) {
         int num;
-        AVLTree<Integer> avlTree = new AVLTree<>();
-        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el valor a agregar");
+        num = sc.nextInt();
 
-        System.out.println("\nArbol AVL manual");
-        System.out.println("Ingrese el dato a ingresar. Ingrese un valor negativo para salir");
-
-        do {
-            System.out.print("\nDato: ");
-            num = sc.nextInt();
-            if (num >= 0) avlTree.add(num);
-        } while (num > 0);
-
-        if (!avlTree.isEmpty()) System.out.println("Arbol binario AVL manual creado satisfactoriamente");
-        else throw new Exception("No pudo crearse el arbol binario AVL o se creo vacio");
-        return avlTree;
-    }
-
-    public static void orderTree(BinaryTree<Integer> binTree, AVLTree<Integer> avlTree) throws Exception {
-        int op2;
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("\nArbol ordenado");
-        System.out.println("\n¿Que arbol desea imprimir?\n1- Arbol binario de busqueda\n2- Arbol AVL");
-        op2 = sc.nextInt();
-
-        if (op2 == 1) {
-            if (binTree == null) {
-                throw new Exception("\nEl arbol es nulo");
+        switch (type) {
+            case 1 -> binTree.add(num);
+            case 2 -> avlTree.add(num);
+            case 3 -> heap.add(num);
+            default -> {
+                System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                Start.menu();
             }
-            binTree.printInOrder();
-        } else if (op2 == 2) {
-            if (avlTree == null) {
-                throw new Exception("\nEl arbol es nulo");
-            }
-            avlTree.printInOrder();
-        } else System.out.println("Opcion invalida");
-    }
-
-    public static void drawTree(BinaryTree<Integer> binTree, AVLTree<Integer> avlTree) throws Exception {
-        int op2;
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("\nArbol ordenado");
-        System.out.println("¿Que arbol desea imprimir?\n1- Arbol binario de busqueda\n2- Arbol AVL");
-        op2 = sc.nextInt();
-
-        if (op2 == 1) {
-            if (binTree == null) {
-                throw new Exception("\nEl arbol es nulo");
-            }
-
-            binTree.printLikeTree(new PrintStream(System.out));
-        } else if (op2 == 2) {
-            if (avlTree == null) {
-                throw new Exception("\nEl arbol es nulo");
-            }
-            avlTree.printLikeTree(new PrintStream(System.out));
         }
+
+        Start.switchOperation(type);
+
+    }
+
+    public static void search(int type) {
+        int num;
+        System.out.println("\nIngrese el dato a buscar");
+        num = sc.nextInt();
+
+        try {
+            switch (type) {
+                case 1 -> System.out.println("Elemento encontrado: " + binTree.search(num));
+                case 2 -> System.out.println("Elemento encontrado: " + avlTree.search(num));
+                case 3 -> System.out.println("Elemento encontrado: " + heap.search(num));
+                default -> {
+                    System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                    Start.menu();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Start.switchOperation(type);
+        }
+        Start.switchOperation(type);
+    }
+
+    public static void delete(int type) {
+        int num = 0;
+
+        if (type == 1 || type == 2) {
+            System.out.println("\nIngrese el dato a borrar");
+            num = sc.nextInt();
+        }
+
+        System.out.println("\nArbol antes de borrar");
+
+
+        try {
+            switch (type) {
+                case 1 -> {
+                    binTree.printInOrder();
+                    binTree.delete(num);
+                    System.out.println("\nArbol despues de borrar");
+                    binTree.printInOrder();
+                }
+                case 2 -> {
+                    avlTree.printInOrder();
+                    avlTree.delete(num);
+                    System.out.println("\nArbol despues de borrar");
+                    avlTree.printInOrder();
+                }
+                case 3 -> {
+                    heap.printInOrder();
+                    heap.deleteMin();
+                    System.out.println("\nArbol despues de borrar");
+                    heap.printInOrder();
+                }
+                default -> {
+                    System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                    Start.menu();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Start.switchOperation(type);
+        }
+        Start.switchOperation(type);
+    }
+
+    public static void print(int type) {
+        System.out.println("\nArbol ordenado");
+        switch (type) {
+            case 1 -> binTree.printInOrder();
+            case 2 -> avlTree.printInOrder();
+            case 3 -> heap.printInOrder();
+            default -> {
+                System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                Start.menu();
+            }
+        }
+        Start.switchOperation(type);
+    }
+
+    public static void draw(int type) {
+        System.out.println("\nDibujo de arbol");
+        switch (type) {
+            case 1 -> binTree.printLikeTree(new PrintStream(System.out));
+            case 2 -> avlTree.printLikeTree(new PrintStream(System.out));
+            case 3 -> heap.printFancyTree();
+            default -> {
+                System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                Start.menu();
+            }
+        }
+        Start.switchOperation(type);
     }
 }

@@ -31,13 +31,13 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
         return applyRotation(node);
     }
 
-    public void delete(AnyType data) {
+    public void delete(AnyType data) throws Exception {
         raiz = delete(data, raiz);
     }
 
-    private Node<AnyType> delete(AnyType data, Node<AnyType> node) {
+    private Node<AnyType> delete(AnyType data, Node<AnyType> node) throws Exception {
         if (node == null) {
-            return null;
+            throw new Exception("El elemento no esta en el arbol");
         }
         if (data.compareTo(node.getElement()) < 0) {
             node.setLeft(delete(data, node.getLeft()));
@@ -85,6 +85,21 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
         }
         return node.getElement();
     }
+
+    public AnyType search(AnyType x) throws Exception {
+        if (x.equals(raiz.getElement())) return raiz.getElement();
+        else if (x.compareTo(raiz.getElement()) < 0 && raiz.getLeft() != null) return search(x, raiz.getLeft());
+        else if (x.compareTo(raiz.getElement()) > 0 && raiz.getRight() != null) return search(x, raiz.getRight());
+        else throw new Exception("El elemento no esta en el arbol");
+    }
+
+    private AnyType search(AnyType x, Node<AnyType> node) throws Exception {
+        if (x.equals(node.getElement())) return node.getElement();
+        else if (x.compareTo(node.getElement()) < 0 && node.getLeft() != null) return search(x, node.getLeft());
+        else if (x.compareTo(node.getElement()) > 0 && node.getRight() != null) return search(x, node.getRight());
+        else throw new Exception("El elemento no esta en el arbol");
+    }
+
 
     /*
      *
@@ -171,7 +186,6 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
      */
 
     public void printInOrder() {
-        System.out.println("Arbol de menor a mayor:");
 
         if (raiz.getLeft() != null) {
             printInOrder(raiz.getLeft());
@@ -196,6 +210,7 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
 
     public void printLikeTree(PrintStream os) {
         os.print(traversePreOrder(raiz));
+        System.out.println();
     }
 
     public String traversePreOrder(Node<AnyType> raiz) {
