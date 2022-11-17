@@ -33,7 +33,7 @@ public class Start {
     }
 
     public static void switchMode(int tree) {
-        System.out.println("Ingrese la forma de carga de valores al arbol:\n\t0- Salir del programa\n\t1- Manual\n\t2- Aleatoria\n\t3- Volver al menu anterior");
+        System.out.println("\nIngrese la forma de carga de valores al arbol:\n\t0- Salir del programa\n\t1- Manual\n\t2- Aleatoria\n\t3- Volver al menu anterior");
         System.out.print("\n\tOpcion: ");
         int mode = sc.nextInt();
 
@@ -54,7 +54,7 @@ public class Start {
     }
 
     public static void switchOperation(int tree) {
-        System.out.println("Seleccione la operacion a realizar:\n\t0- Salir del programa\n\t1- Agregar dato\n\t2- Buscar dato\n\t3- Borrar dato\n\t4- Imprimir arbol en orden\n\t5- Dibujar forma de arbol (solo ABB y AVL)\n\t6- Volver al menu anterior");
+        System.out.println("\nSeleccione la operacion a realizar:\n\t0- Salir del programa\n\t1- Agregar dato\n\t2- Buscar dato\n\t3- Borrar dato\n\t4- Imprimir arbol en orden\n\t5- Dibujar forma de arbol\n\t6- Volver al menu anterior");
         System.out.print("\n\tOpcion: ");
         op = sc.nextInt();
 

@@ -11,9 +11,8 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
      *
      */
 
-    public AVLTree<AnyType> add(AnyType data) {
+    public void add(AnyType data) {
         raiz = add(data, raiz);
-        return this;
     }
 
     private Node<AnyType> add(AnyType data, Node<AnyType> node) {
@@ -58,25 +57,11 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
         return applyRotation(node);
     }
 
-    public AnyType getMax() {
-        if (isEmpty()) {
-            return null;
-        }
-        return getMax(raiz);
-    }
-
     private AnyType getMax(Node<AnyType> node) {
         if (node.getRight() != null) {
             return getMax(node.getRight());
         }
         return node.getElement();
-    }
-
-    public AnyType getMin() {
-        if (isEmpty()) {
-            return null;
-        }
-        return getMin(raiz);
     }
 
     private AnyType getMin(Node<AnyType> node) {
@@ -108,10 +93,6 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
      */
     public boolean isEmpty() {
         return raiz == null;
-    }
-
-    public void makeEmpty() {
-        raiz = null;
     }
 
     /*
@@ -185,7 +166,10 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
      *
      */
 
-    public void printInOrder() {
+    public void printInOrder() throws Exception {
+        if(isEmpty()){
+            throw new Exception("El arbol esta vacio");
+        }
 
         if (raiz.getLeft() != null) {
             printInOrder(raiz.getLeft());
@@ -254,4 +238,25 @@ public class AVLTree<AnyType extends Comparable<AnyType>> {
             traverseNodes(sb, paddingForBoth, pointerRight, node.getRight(), false);
         }
     }
+
+    /* Sin usar
+
+      public void makeEmpty() {
+      raiz = null;
+    }
+
+    public AnyType getMax() {
+        if (isEmpty()) {
+            return null;
+        }
+        return getMax(raiz);
+    }
+
+    public AnyType getMin() {
+        if (isEmpty()) {
+            return null;
+        }
+        return getMin(raiz);
+    }
+    */
 }

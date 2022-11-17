@@ -38,28 +38,35 @@ public class Heap<AnyType extends Comparable<AnyType>> {
         }
     }
 
-    public Heap<AnyType> add(AnyType data) {
+    public void add(AnyType data) {
         if (isFull()) {
             resize(2 * heap.length);
         }
         heap[++position] = data;
         fixUpward();
-        return this;
     }
 
-    public AnyType getRoot() {
-        return heap[0];
-    }
 
-    public AnyType deleteMin() {
+    public void deleteMin() throws Exception {
         if (isEmpty()) {
-            return null;
+            throw new Exception("\nEl monticulo esta vacio");
         }
-        AnyType result = heap[0];
         heap[0] = heap[position--];
         heap[position + 1] = null;
         fixDownward(position);
-        return result;
+    }
+
+    public void delete(AnyType data) throws Exception{
+
+        for (int i = 0; i < heap.length; i++) {
+            if (data == heap[i]) {
+                heap[i] = heap[position--];
+                heap[position + 1] = null;
+                fixDownward(position);
+                return;
+            }
+        }
+        throw new Exception("\nEl elemento no esta en el monticulo");
     }
 
     public AnyType search(AnyType data) throws Exception {
@@ -107,12 +114,6 @@ public class Heap<AnyType extends Comparable<AnyType>> {
         return heap.length == 0;
     }
 
-    public void print() {
-        for (int i = 0; i < heap.length - 1; i++) {
-            System.out.print(heap[i] + "\t");
-        }
-    }
-
     public void printFancyTree() {
         System.out.println(printFancyTree(0, ""));
     }
@@ -136,8 +137,6 @@ public class Heap<AnyType extends Comparable<AnyType>> {
                 else
                     _prefix += "   "; // three spaces
             }
-
-
             if (!isLeaf) {
                 outputString += printFancyTree(2 * index + 1, _prefix);
                 outputString += printFancyTree(2 * index + 2, _prefix);

@@ -17,8 +17,8 @@ public class Operations {
         int cant;
         Random ran = new Random();
 
-        System.out.println("Ingrese la cantidad de elementos del arbol");
-        System.out.print("\nCantidad: ");
+        System.out.println("\nIngrese la cantidad de elementos del arbol");
+        System.out.print("Cantidad: ");
         cant = sc.nextInt();
 
         if (cant <= 0) {
@@ -157,6 +157,7 @@ public class Operations {
 
     public static void delete(int type) {
         int num = 0;
+        int op;
 
         if (type == 1 || type == 2) {
             System.out.println("\nIngrese el dato a borrar");
@@ -164,7 +165,6 @@ public class Operations {
         }
 
         System.out.println("\nArbol antes de borrar");
-
 
         try {
             switch (type) {
@@ -181,10 +181,27 @@ public class Operations {
                     avlTree.printInOrder();
                 }
                 case 3 -> {
-                    heap.printInOrder();
-                    heap.deleteMin();
-                    System.out.println("\nArbol despues de borrar");
-                    heap.printInOrder();
+                    System.out.println("\n1. Borrar minimo \n2. Borrar elemento");
+                    System.out.print("\nOpcion: ");
+                    op = sc.nextInt();
+
+                    if(op == 1){
+                        heap.printInOrder();
+                        heap.deleteMin();
+                        System.out.println("\nArbol despues de borrar");
+                        heap.printInOrder();
+                    }
+                    else if(op == 2){
+                        System.out.println("\nIngrese el dato a borrar");
+                        num = sc.nextInt();
+                        heap.printInOrder();
+                        heap.delete(num);
+                        System.out.println("\nArbol despues de borrar");
+                        heap.printInOrder();
+                    }
+                    else{
+                        System.out.println("La opcion ingresada no es valida.");
+                    }
                 }
                 default -> {
                     System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
@@ -200,14 +217,19 @@ public class Operations {
 
     public static void print(int type) {
         System.out.println("\nArbol ordenado");
-        switch (type) {
-            case 1 -> binTree.printInOrder();
-            case 2 -> avlTree.printInOrder();
-            case 3 -> heap.printInOrder();
-            default -> {
-                System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
-                Start.menu();
+        try {
+            switch (type) {
+                case 1 -> binTree.printInOrder();
+                case 2 -> avlTree.printInOrder();
+                case 3 -> heap.printInOrder();
+                default -> {
+                    System.out.println("La opcion ingresada no es valida. Volviendo al menu...");
+                    Start.menu();
+                }
             }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            Start.switchOperation(type);
         }
         Start.switchOperation(type);
     }
